@@ -1,5 +1,6 @@
 import Enums.Decisions;
 import Shared.Communicats;
+import Shared.IOReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,20 +10,18 @@ public class CurrencyReader {
     public boolean runProgram = true;
     private boolean enumFind = false;
 
-    private BufferedReader reader;
     private String text;
-    private Communicats communicats;
-    private CurrencyConverter currencyConverter;
-
+    private final Communicats communicats;
+    private final IOReader ioReader;
     public CurrencyReader(){
         communicats= new Communicats();
-        currencyConverter = new CurrencyConverter();
+        ioReader = new IOReader();
     }
 
     public void AskForDecision() throws IOException{
         System.out.println(communicats.getOptionsMsg());
-        reader = new BufferedReader(new InputStreamReader(System.in));
-        text = reader.readLine();
+
+        text = ioReader.ReadFromInput();
         ChooseOption(text);
     }
     private void ChooseOption(String text){
@@ -52,8 +51,6 @@ public class CurrencyReader {
 
 
     }
-    public String ReturnText(){ return text;}
-
     public boolean DoConversion() {
         return runProgram && enumFind;
     }
